@@ -46,15 +46,15 @@ Graph::Graph(int v[], int e[][3], int v_size, int e_size, bool directed) {
 }
 
 Graph::~Graph() {
-	// Comento pues para valores muy grandes produce double free.
-	// TODO: solucionar problemas de leaks de memoria
-	/*for (int i = 0; i < v_size; i++) {
+	for (int i = 0; i < v_size; i++) {
 		delete[] graph_matrix[i];
 	}
 	for (int i = 0; i < e_size; i++) {
 		delete[] e[i];
 	}
-	delete[] v;*/
+	delete[] graph_matrix;
+	delete[] e;
+	delete[] v;
 }
 
 void Graph::printMatrix() {
@@ -173,3 +173,6 @@ void Graph::randomize(int node_number, int edge_max, int weigth_max,
 	createMatrix();
 }
 
+int& Graph::operator ()(const int x, const int y) {
+	return (x < v_size && y < v_size) ? graph_matrix[x][y] : graph_matrix[0][0];
+}
